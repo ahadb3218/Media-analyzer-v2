@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Settings, AlertTriangle, AlertCircle, Info, ChevronDown, ChevronUp } from 'lucide-react';
-import { MediaMetadata } from '../../lib/types';
-import { analyzeForConversion, type ConversionRecommendation, type ConversionOptions } from '../../lib/utils/conversionAdvisor';
+import { MediaMetadata } from '../../lib/types/types';
+import { analyzeForConversion, type ConversionRecommendation } from '../../lib/utils/conversionAdvisor';
 
 interface ConversionAdvisorProps {
   file: MediaMetadata;

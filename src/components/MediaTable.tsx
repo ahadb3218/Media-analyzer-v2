@@ -1,6 +1,6 @@
-import React from 'react';
+// MediaTable.tsx
 import { Trash2, FileVideo, Image } from 'lucide-react';
-import type { MediaMetadata } from '../lib/types';
+import type { MediaMetadata } from '../lib/types/types';
 import { QualityAnalysis } from './analysis/QualityAnalysis';
 import { DuplicateAnalysis } from './analysis/DuplicateAnalysis';
 import { ConversionAdvisor } from './analysis/ConversionAdvisor';
@@ -139,19 +139,19 @@ export function MediaTable({ files, selectedFeature, onRemoveFile }: MediaTableP
   // Group files by quality for the quality organizer view
   const videoFiles = files.filter(file => file.fileType.startsWith('video/'));
   const sortedFiles = sortByQualityPriority(videoFiles);
-  
+
   const groupedFiles: GroupedFiles[] = sortedFiles.reduce((groups: GroupedFiles[], file) => {
     if (!file.height) return groups;
-    
+
     const group = getQualityGroup(file.height);
     const existingGroup = groups.find(g => g.group.resolution === group.resolution);
-    
+
     if (existingGroup) {
       existingGroup.files.push(file);
     } else {
       groups.push({ group, files: [file] });
     }
-    
+
     return groups;
   }, []);
 
@@ -167,7 +167,7 @@ export function MediaTable({ files, selectedFeature, onRemoveFile }: MediaTableP
               {files.length} file{files.length !== 1 ? 's' : ''}
             </span>
           </div>
-          
+
           <div className="grid gap-4">
             {files.map((file) => (
               <div key={file.hash} className="bg-white rounded-lg shadow-sm border">
@@ -194,12 +194,18 @@ export function MediaTable({ files, selectedFeature, onRemoveFile }: MediaTableP
                 <div className="p-4">
                   <QualityAnalysis file={file} />
                 </div>
+                {file.contentSummary && (
+                  <div className="p-4">
+                    <h4 className="font-medium text-gray-800">Content Summary:</h4>
+                    <p className="text-sm text-gray-600 whitespace-pre-line">{file.contentSummary}</p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </div>
       ))}
-      
+
       {/* Show non-video files separately */}
       {files.some(file => !file.fileType.startsWith('video/')) && (
         <div className="space-y-4">

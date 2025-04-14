@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Check, X, AlertTriangle, ChevronDown, ChevronUp, Video, Radio, PlaySquare } from 'lucide-react';
-import { MediaMetadata } from '../../lib/types';
+import { MediaMetadata } from '../../lib/types/types';
 import { PLATFORM_REQUIREMENTS, type PlatformRequirement } from '../../lib/utils/streamingStandards';
 
 interface StreamingReadinessProps {

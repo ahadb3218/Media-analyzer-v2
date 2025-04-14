@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FileUpload } from './components/FileUpload';
 import { MediaTable } from './components/MediaTable';
 import { FeatureSelector, type Feature } from './components/FeatureSelector';
-import { initDB, insertMediaMetadata, getAllMediaFiles, removeMediaFile } from './lib/db/indexedDB';
+import { initDB, insertMediaMetadata, getAllMediaFiles, removeMediaFile } from './lib/config/mediaStore.ts.ts';
 import { analyzeMedia } from './lib/mediaAnalyzer';
 import { FileVideo } from 'lucide-react';
-import type { MediaMetadata } from './lib/types';
+import type { MediaMetadata } from './lib/types/types.ts';
 
 export function App() {
   const [files, setFiles] = useState<MediaMetadata[]>([]);

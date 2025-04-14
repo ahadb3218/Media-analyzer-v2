@@ -1,4 +1,4 @@
-import type { MediaMetadata } from '../types';
+import type { MediaMetadata } from '../types/types';
 
 export async function initDB() {
   return new Promise((resolve, reject) => {

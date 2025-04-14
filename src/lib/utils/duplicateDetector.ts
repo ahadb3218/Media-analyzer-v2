@@ -1,4 +1,4 @@
-import { MediaMetadata } from '../types';
+import { MediaMetadata } from '../types/types';
 
 interface DuplicateGroup {
   files: MediaMetadata[];

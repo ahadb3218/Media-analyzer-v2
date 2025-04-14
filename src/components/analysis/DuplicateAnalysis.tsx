@@ -1,6 +1,5 @@
-import React from 'react';
 import { Trash2 } from 'lucide-react';
-import { MediaMetadata } from '../../lib/types';
+import { MediaMetadata } from '../../lib/types/types';
 import { findDuplicates } from '../../lib/utils/duplicateDetector';
 import { formatFileSize } from '../../lib/utils/format';
 

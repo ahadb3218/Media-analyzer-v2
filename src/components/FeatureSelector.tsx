@@ -1,5 +1,5 @@
 import React from 'react';
-import { FolderSearch, Image, FileVideo, Copy, Archive, Settings, Youtube, Volume2 } from 'lucide-react';
+import { Image, FileVideo, Copy, Archive, Settings, Youtube, Volume2 } from 'lucide-react';
 
 export interface Feature {
   id: string;

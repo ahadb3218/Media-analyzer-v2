@@ -1,4 +1,4 @@
-import type { MediaMetadata } from '../types';
+import type { MediaMetadata } from '../types/types';
 
 export interface QualityGroup {
   name: string;

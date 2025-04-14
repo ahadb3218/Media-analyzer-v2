@@ -1,5 +1,4 @@
-import React from 'react';
-import { MediaMetadata } from '../../lib/types';
+import { MediaMetadata } from '../../lib/types/types';
 import { getQualityScore } from '../../lib/utils/quality';
 import { formatFileSize } from '../../lib/utils/format';
 

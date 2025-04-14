@@ -1,5 +1,4 @@
-import React from 'react';
-import { MediaMetadata } from '../../lib/types';
+import { MediaMetadata } from '../../lib/types/types';
 import { formatFileSize, formatDuration } from '../../lib/utils/format';
 
 interface MetadataViewerProps {

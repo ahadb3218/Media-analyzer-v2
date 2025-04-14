@@ -1,4 +1,4 @@
-import { MediaMetadata } from '../types';
+import { MediaMetadata } from '../types/types';
 import { VIDEO_STANDARDS, type VideoStandard } from './videoStandards';
 
 export interface ConversionRecommendation {

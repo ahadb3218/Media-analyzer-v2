@@ -1,33 +1,18 @@
+// mediaAnalyzer.ts
 import { calculateFileHash } from './utils/hash';
 import { determineVideoQuality, determineImageQuality } from './utils/quality';
 import { extractVideoMetadata } from './analyzers/videoAnalyzer';
 import { extractImageMetadata } from './analyzers/imageAnalyzer';
 import { analyzeAudio } from './analyzers/audioAnalyzer';
-import type { MediaMetadata } from './types';
-
-const SUPPORTED_VIDEO_FORMATS = new Set([
-  'video/mp4',
-  'video/webm',
-  'video/ogg',
-  'video/quicktime',
-  'video/x-matroska',
-  'video/x-msvideo',
-  'video/x-flv',
-  'video/3gpp',
-  'video/3gpp2',
-  'video/x-ms-wmv',
-  'video/x-m4v',
-  'application/x-mpegURL',
-  'video/MP2T'
-]);
+import type { MediaMetadata } from './types/types';
 
 const SUPPORTED_CODECS = new Set([
-  'avc1', 'mp4v', 'h264', 'h265', 'hevc',
-  'vp8', 'vp9', 'av1', 'theora', 'divx',
-  'xvid', 'h263', 'mpeg2', 'mpeg4'
+  'avc1', 'mp4v', 'h264', 'h265', 'hevc', 'vp8', 'vp9', 'av1',
+  'theora', 'divx', 'xvid', 'h263', 'mpeg2', 'mpeg4'
 ]);
 
 export async function analyzeMedia(file: File): Promise<MediaMetadata> {
+  // Base metadata common to all file types
   const baseMetadata = {
     filename: file.name,
     fileType: detectFileType(file),
@@ -38,19 +23,30 @@ export async function analyzeMedia(file: File): Promise<MediaMetadata> {
 
   let extraMetadata = {};
 
+  // Video file analysis
   if (isVideoFile(file)) {
     try {
+      // Extract video metadata (width, height, duration, etc.)
       const metadata = await extractVideoMetadata(file);
       
-      // Process audio analysis
-      let audioAnalysis = { contentDescription: '', contentType: '', contentSummary: '' };
+      // Analyze audio and get transcription/summary
+      let audioAnalysis = { 
+        contentDescription: '', 
+        contentType: '', 
+        contentSummary: '' 
+      };
       try {
-        // Direct audio analysis from the file
         audioAnalysis = await analyzeAudio(file);
       } catch (audioError) {
         console.warn('Audio analysis failed:', audioError);
+        audioAnalysis = {
+          contentDescription: 'Audio analysis unavailable',
+          contentType: 'Unknown',
+          contentSummary: 'Unable to generate summary due to audio processing error'
+        };
       }
 
+      // Detect video format details
       const formatInfo = await detectVideoFormat(file);
       
       extraMetadata = {
@@ -72,7 +68,9 @@ export async function analyzeMedia(file: File): Promise<MediaMetadata> {
         error: error instanceof Error ? error.message : 'Unknown error analyzing video'
       };
     }
-  } else if (file.type.startsWith('image/')) {
+  } 
+  // Image file analysis
+  else if (file.type.startsWith('image/')) {
     try {
       const metadata = await extractImageMetadata(file);
       extraMetadata = {
@@ -118,7 +116,6 @@ function getTypeFromExtension(extension?: string): string {
     'ts': 'video/MP2T',
     'm3u8': 'application/x-mpegURL'
   };
-
   return videoExtensions[extension || ''] || 'application/octet-stream';
 }
 
@@ -176,7 +173,6 @@ function detectCodec(video: HTMLVideoElement): string | undefined {
       return SUPPORTED_CODECS.has(codec) ? codec : undefined;
     }
   }
-
   return undefined;
 }
 
@@ -195,7 +191,6 @@ function detectContainer(file: File): string | undefined {
     'video/x-ms-wmv': 'WMV',
     'application/x-mpegURL': 'HLS'
   };
-
   return containers[type];
 }
 

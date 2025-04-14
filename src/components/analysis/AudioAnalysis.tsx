@@ -1,6 +1,5 @@
-import React from 'react';
 import { Volume2, FileText, Info, Tag } from 'lucide-react';
-import { MediaMetadata } from '../../lib/types';
+import { MediaMetadata } from '../../lib/types/types';
 
 interface AudioAnalysisProps {
   file: MediaMetadata;
